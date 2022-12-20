@@ -21,4 +21,5 @@ from qgapi.quickstart import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('question-generation/', views.questionGeneration),
+    path('question-grading/', views.questionGrading),
 ]
