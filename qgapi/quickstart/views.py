@@ -24,7 +24,7 @@ logging.basicConfig(
     ]
 )
 
-model = T5ForConditionalGeneration.from_pretrained("./models-20")
+model = T5ForConditionalGeneration.from_pretrained("./models")
 tokenizer = AutoTokenizer.from_pretrained('t5-small')
 
 @csrf_exempt
@@ -72,23 +72,9 @@ def questionGrading(request):
             return_dict=True,
         )
 
-        # output1=output1.last_hidden_state.detach()
-        # output2=output2.last_hidden_state.detach()
-
-        # output1=output1.numpy()
-        # output2=output2.numpy()
-
-        # output1 = output1.reshape(-1)
-        # output2 = output2.reshape(-1)
-
-        # o1=output1.last_hidden_state
-        # o2=output2.last_hidden_state
-
         o1=output1
         o2=output2
 
-        # o1 = torch.mean(o1, dim=1)
-        # o2 = torch.mean(o2, dim=1)
         o1=(o1.last_hidden_state * tokens1["attention_mask"].unsqueeze(-1)).sum(dim=-2) / tokens1["attention_mask"].sum(dim=-1)
         o2=(o2.last_hidden_state * tokens2["attention_mask"].unsqueeze(-1)).sum(dim=-2) / tokens2["attention_mask"].sum(dim=-1)
 
