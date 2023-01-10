@@ -1,7 +1,6 @@
 import json
 from django.http import JsonResponse
 from django.http import HttpResponse
-# Create your views here.
 import torch
 
 from django.contrib.auth.models import User, Group
@@ -36,8 +35,10 @@ def questionGeneration(request):
         print(request)
         data = json.loads(request.body)
         sentence = data['sentence']
+        sentenceArray=sentence.split(" ")
+        questionNumber=int(len(sentenceArray)/20)
         sentence=tokenizer(sentence,return_tensors="pt")
-        outs = model.generate(input_ids=sentence['input_ids'], attention_mask=sentence['attention_mask'],max_length=512,early_stopping=True,num_beams=5,num_return_sequences=5)
+        outs = model.generate(input_ids=sentence['input_ids'], attention_mask=sentence['attention_mask'],max_length=128,early_stopping=True,num_beams=questionNumber,num_return_sequences=questionNumber)
         outs=[tokenizer.decode(ids) for ids in outs]
         questions=[]
         for s in outs:
