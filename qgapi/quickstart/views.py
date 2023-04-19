@@ -3,10 +3,6 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 import torch
 
-from django.contrib.auth.models import User, Group
-from rest_framework import viewsets
-from rest_framework import permissions
-
 from transformers import AutoTokenizer,T5ForConditionalGeneration
 import re
 from django.views.decorators.csrf import csrf_exempt
